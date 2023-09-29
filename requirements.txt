@@ -15,7 +15,7 @@ frozenlist
 gunicorn==21.2.0
 idna==3.4
 inflection==0.5.1
-multidict==6.0.4
+multidict
 packaging==23.1
 Pillow==10.0.1
 PyJWT==2.8.0
