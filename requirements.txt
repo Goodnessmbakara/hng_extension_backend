@@ -10,7 +10,7 @@ deepgram-sdk==2.11.0
 Django
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.3.0
-drf-yasg==1.21.7
+drf-yasg
 frozenlist==1.4.0
 gunicorn==21.2.0
 idna==3.4
