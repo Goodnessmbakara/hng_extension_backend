@@ -4,6 +4,7 @@ asgiref==3.7.2
 async-timeout==4.0.3
 attrs==23.1.0
 backports.zoneinfo==0.2.1
+Brotli==1.1.0
 charset-normalizer==3.2.0
 deepgram-sdk==2.11.0
 Django==4.2.5
@@ -25,4 +26,5 @@ sqlparse==0.4.4
 typing-extensions==4.8.0
 uritemplate==4.1.1
 websockets==11.0.3
+whitenoise==6.5.0
 yarl==1.9.2
