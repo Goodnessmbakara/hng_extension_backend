@@ -23,7 +23,7 @@ python-dotenv==0.21.1
 pytz==2023.3.post1
 PyYAML==6.0.1
 sqlparse==0.4.4
-typing-extensions==4.8.0
+typing-extensions==4.7.1
 uritemplate==4.1.1
 websockets==11.0.3
 whitenoise==6.5.0
