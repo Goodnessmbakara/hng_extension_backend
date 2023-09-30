@@ -33,7 +33,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY",default='your secret key')
 DEEPGRAM_API_KEY=os.environ.get('DEEPGRAM_API_KEY')
 
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
+CORS_ALLOWED_ORIGINS = ['*']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
@@ -58,6 +59,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_yasg',
+    'corsheaders',
+    
 ]
 
 MIDDLEWARE = [
@@ -65,6 +68,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
