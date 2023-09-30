@@ -22,7 +22,7 @@ gunicorn==21.2.0
 h11==0.14.0
 idna==3.4
 imageio==2.31.2
-imageio-ffmpeg==0.4.9
+imageio-ffmpeg==6.7.0
 importlib-metadata==6.8.0
 inflection==0.5.1
 Jinja2==3.1.2
