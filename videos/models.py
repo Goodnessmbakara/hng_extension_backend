@@ -59,3 +59,4 @@ class Video(models.Model):
     owner = models.ForeignKey('CustomUser', on_delete=models.SET_NULL, null=True, blank=True, related_name='owner')
     screen_recording = models.FileField(upload_to='videos/screen_records')
     uploaded_at = models.DateTimeField(auto_now_add=True)
+    transcript = models.TextField(null=True, blank=True)

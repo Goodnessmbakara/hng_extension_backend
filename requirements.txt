@@ -28,3 +28,5 @@ uritemplate==4.1.1
 websockets==11.0.3
 whitenoise==6.5.0
 yarl==1.9.2
+SpeechRecognition==3.10.0
+pydub==0.25.1

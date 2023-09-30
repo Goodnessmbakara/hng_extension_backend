@@ -1,15 +1,37 @@
 from rest_framework import generics, permissions
 from .models import Video
 from .serializers import  VideoSerializer
-from rest_framework.parsers import MultiPartParser
+from rest_framework.parsers import FileUploadParser
 from rest_framework import status
 from rest_framework.response import Response
 
 
-from django.conf import settings
-from deepgram import Deepgram
+from pydub import AudioSegment
+import speech_recognition as sr
+import moviepy.editor as mp
+import os
 
+import whisper
 
+model = whisper.load_model("base")
+
+# # load audio and pad/trim it to fit 30 seconds
+# audio = whisper.load_audio("audio.mp3")
+# audio = whisper.pad_or_trim(audio)
+
+# # make log-Mel spectrogram and move to the same device as the model
+# mel = whisper.log_mel_spectrogram(audio).to(model.device)
+
+# # detect the spoken language
+# _, probs = model.detect_language(mel)
+# print(f"Detected language: {max(probs, key=probs.get)}")
+
+# # decode the audio
+# options = whisper.DecodingOptions()
+# result = whisper.decode(model, mel, options)
+
+# # print the recognized text
+# print(result.text)
 
 class VideoCreateView(generics.CreateAPIView):
     """
@@ -22,8 +44,8 @@ class VideoCreateView(generics.CreateAPIView):
     """
     queryset = Video.objects.all()
     serializer_class = VideoSerializer
-    parser_classes = [MultiPartParser]
-    permission_classes = (permissions.AllowAny,)
+    parser_classes = [FileUploadParser]
+    permission_classes = (permissions.AllowAny,)        
     
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -31,21 +53,27 @@ class VideoCreateView(generics.CreateAPIView):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
 
-        # # Get the uploaded file
-        # uploaded_file = request.FILES['screen_recording']
+        #Extract audio from the video
+        video = mp.VideoFileClip(serializer.instance.screen_recording.path)
+        audio_file = video.audio
+        audio_file.write_audiofile(f"audio_{serializer.instance.id}.wav")
 
-        # # Process the file in chunks
-        # for chunk in uploaded_file.chunks():
-        #     process(chunk)
+        # # Transcribe the audio
+        r = sr.Recognizer()
+        with sr.AudioFile(f"audio_{serializer.instance.id}.wav") as source:
+            data = r.record(source)
+    
+        transcription = r.recognize_google(data)
+        print(transcription)
+        # # Save the transcription to a file
+        # transcription_path = "transcription.txt"
+        # with open(transcription_path, "w") as file:
+        #     file.write(transcription)
 
-        # Transcribe the video using Deepgram
-        # dg = Deepgram(settings.DEEPGRAM_API_KEY)
-        # transcript = await dg.transcription.prerecorded(serializer.instance.screen_recording.path)
-
-        # # Save the transcript in the database
-        # video = serializer.instance
-        # video.transcript = transcript.results.channels[0].alternatives[0].transcript
-        # video.save()
+        # # Add the transcription file URL to the response
+        # response_data = serializer.data
+        # response_data['transcription_file_url'] = request.build_absolute_uri(transcription_path)
+        # os.remove(audio_path)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
@@ -53,7 +81,7 @@ class VideoCreateView(generics.CreateAPIView):
 
 class VideoListView(generics.ListAPIView):
     """
-    List videos uploaded by the currently authenticated user.
+    List videos  currently available on the backend.
 
     Required permissions: AllowAny
 
