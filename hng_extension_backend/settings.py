@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY",default='your secret key')
 DEEPGRAM_API_KEY=os.environ.get('DEEPGRAM_API_KEY')
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
