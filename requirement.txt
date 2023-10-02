@@ -6,6 +6,7 @@ async-timeout==4.0.3
 attrs==23.1.0
 backports.zoneinfo==0.2.1
 billiard==4.1.0
+Brotli==1.1.0
 cachetools==5.3.1
 celery==5.3.4
 certifi==2023.7.22
@@ -59,4 +60,5 @@ urllib3==2.0.5
 vine==5.0.0
 wcwidth==0.2.8
 websockets==11.0.3
+whitenoise==6.5.0
 yarl==1.9.2
