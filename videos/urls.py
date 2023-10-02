@@ -1,17 +1,9 @@
-from django.urls import path, include
-# from rest_framework_simplejwt.views import (
-#     TokenObtainPairView,
-#     TokenRefreshView,
-# )
-
-from .views import  VideoCreateView, VideoListView #ProfileDetailView, ProfileUpdateView,
+from django.urls import path
+from . import views
 
 urlpatterns = [
-
-    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    # path('profile/', ProfileDetailView.as_view(), name='profile-detail'),
-    # path('profile/edit/', ProfileUpdateView.as_view(), name='profile-update'),
-    path('videos/upload/', VideoCreateView.as_view(), name='video-upload'),
-    path('videos/', VideoListView.as_view(), name='video-list'),
+    path('start_recording/', views.start_recording, name='start_recording'),
+    path('append_video/<int:video_id>/', views.AppendVideoView.as_view(), name='append_video'),
+    path('stop_recording/<int:video_id>/', views.StopRecordingView.as_view(), name='stop_recording'),
+    path('get_video/<int:video_id>/', views.RetrieveVideoView.as_view(), name='get_video'),
 ]

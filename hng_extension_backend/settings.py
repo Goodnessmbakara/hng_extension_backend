@@ -34,7 +34,7 @@ DEEPGRAM_API_KEY=os.environ.get('DEEPGRAM_API_KEY')
 
 
 ALLOWED_HOSTS = []
-CORS_ALLOWED_ORIGINS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
@@ -57,7 +57,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'videos',
     'rest_framework',
-    'rest_framework_simplejwt',
     'drf_yasg',
     'corsheaders',
     
@@ -126,9 +125,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
+    # ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ]
@@ -172,6 +171,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
+print(BASE_DIR)
+
 
 if not DEBUG:    # Tell Django to copy statics to the `staticfiles` directory
     # in your application directory on Render.

@@ -1,7 +1,17 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.conf import settings
-from deepgram import Deepgram
+
+
+
+class Video(models.Model):
+    """
+    Model representing a video. allowing multiple videos.
+    """
+
+    screen_recording = models.FileField(upload_to='videos/screen_records')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    transcript = models.TextField(null=True, blank=True)
 
 class CustomUserManager(BaseUserManager):
     
@@ -56,7 +66,7 @@ class Video(models.Model):
     """
     Model representing a video. Linked to User via ForeignKey, allowing each user to have multiple videos.
     """
-    owner = models.ForeignKey('CustomUser', on_delete=models.SET_NULL, null=True, blank=True, related_name='owner')
+
     screen_recording = models.FileField(upload_to='videos/screen_records')
     uploaded_at = models.DateTimeField(auto_now_add=True)
     transcript = models.TextField(null=True, blank=True)
