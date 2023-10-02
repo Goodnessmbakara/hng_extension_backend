@@ -22,7 +22,12 @@ class AppendVideoView(generics.UpdateAPIView):
     queryset = Video.objects.all()
     serializer_class = VideoDetailSerializer
     lookup_url_kwarg = 'video_id'
-
+    
+    def dispatch(self, request, *args, **kwargs):
+        if request.method != 'PUT':
+            return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        return super().dispatch(request, *args, **kwargs)
+    
     def update(self, request, *args, **kwargs):
         """
         This method appends a new chunk of data to an existing video.
@@ -51,13 +56,19 @@ class StopRecordingView(generics.UpdateAPIView):
     queryset = Video.objects.all()
     serializer_class = VideoSerializer
     lookup_url_kwarg = 'video_id'
-
+    
+    def dispatch(self, request, *args, **kwargs):
+        if request.method != 'PUT':
+            return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        return super().dispatch(request, *args, **kwargs)
+    
     def update(self, request, *args, **kwargs):
         """
     This class-based view handles retrieving a specific video object.
     """
         video = self.get_object()
         video.finalize = True
+        
         video.save()
 
         # Trigger the transcription task
